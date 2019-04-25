@@ -73,11 +73,11 @@ class AutoInput extends Component {
     this.search(value);
   };
 
-  search = value => {
+  search = async value => {
     let { data, limit = 10, field, lang } = this.props;
 
     if (typeof data === "function") {
-      data = this.fetch(value);
+      data = await this.fetch(value);
     }
 
     if (!Array.isArray(data)) {

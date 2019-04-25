@@ -119,62 +119,60 @@ var AutoInput = function (_Component) {
 
       _this.setState({ value: value, activeItemIndex: -1 });
       _this.search(value);
-    }, _this.search = function (value) {
-      var _this$props = _this.props,
-          data = _this$props.data,
-          _this$props$limit = _this$props.limit,
-          limit = _this$props$limit === undefined ? 10 : _this$props$limit,
-          field = _this$props.field,
-          lang = _this$props.lang;
-
-
-      if (typeof data === "function") {
-        data = _this.fetch(value);
-      }
-
-      if (!Array.isArray(data)) {
-        data = [];
-      }
-
-      var result = [];
-      var activeItem = void 0;
-
-      data.forEach(function (item, index) {
-        if (field) {
-          activeItem = mb(field)(item) || "";
-        } else {
-          activeItem = item;
-        }
-
-        var activeLang = lang ? lang : "en-EN";
-        var check = activeItem.toLocaleLowerCase(activeLang).includes(value.toLocaleLowerCase(activeLang));
-
-        if (check) {
-          result.push({
-            id: item && item.id || index,
-            text: activeItem
-          });
-        }
-      });
-
-      _this.setState({
-        result: value.length ? result.slice(0, limit) : []
-      });
-    }, _this.fetch = function () {
+    }, _this.search = function () {
       var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(value) {
-        var data;
+        var _this$props, data, _this$props$limit, limit, field, lang, result, activeItem;
+
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                data = _this.props.data;
-                _context.next = 3;
-                return data(value);
+                _this$props = _this.props, data = _this$props.data, _this$props$limit = _this$props.limit, limit = _this$props$limit === undefined ? 10 : _this$props$limit, field = _this$props.field, lang = _this$props.lang;
 
-              case 3:
-                return _context.abrupt("return", _context.sent);
+                if (!(typeof data === "function")) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 4;
+                return _this.fetch(value);
 
               case 4:
+                data = _context.sent;
+
+              case 5:
+
+                if (!Array.isArray(data)) {
+                  data = [];
+                }
+
+                result = [];
+                activeItem = void 0;
+
+
+                data.forEach(function (item, index) {
+                  if (field) {
+                    activeItem = mb(field)(item) || "";
+                  } else {
+                    activeItem = item;
+                  }
+
+                  var activeLang = lang ? lang : "en-EN";
+                  var check = activeItem.toLocaleLowerCase(activeLang).includes(value.toLocaleLowerCase(activeLang));
+
+                  if (check) {
+                    result.push({
+                      id: item && item.id || index,
+                      text: activeItem
+                    });
+                  }
+                });
+
+                _this.setState({
+                  result: value.length ? result.slice(0, limit) : []
+                });
+
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -184,6 +182,31 @@ var AutoInput = function (_Component) {
 
       return function (_x) {
         return _ref5.apply(this, arguments);
+      };
+    }(), _this.fetch = function () {
+      var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(value) {
+        var data;
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                data = _this.props.data;
+                _context2.next = 3;
+                return data(value);
+
+              case 3:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, _this2);
+      }));
+
+      return function (_x2) {
+        return _ref6.apply(this, arguments);
       };
     }(), _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
@@ -240,10 +263,10 @@ AutoInput.keyCode = {
 };
 
 
-function AutoInputElement(_ref6) {
-  var value = _ref6.value,
-      onChange = _ref6.onChange,
-      onKeyUp = _ref6.onKeyUp;
+function AutoInputElement(_ref7) {
+  var value = _ref7.value,
+      onChange = _ref7.onChange,
+      onKeyUp = _ref7.onKeyUp;
 
   return _react2.default.createElement("input", {
     className: "autoinput-input",
@@ -254,8 +277,8 @@ function AutoInputElement(_ref6) {
   });
 }
 
-function AutoInputWord(_ref7) {
-  var value = _ref7.value;
+function AutoInputWord(_ref8) {
+  var value = _ref8.value;
 
   return _react2.default.createElement(
     "span",
@@ -264,11 +287,11 @@ function AutoInputWord(_ref7) {
   );
 }
 
-function AutoInputItem(_ref8) {
-  var isActive = _ref8.isActive,
-      text = _ref8.text,
-      searchKey = _ref8.searchKey,
-      onMouseOver = _ref8.onMouseOver;
+function AutoInputItem(_ref9) {
+  var isActive = _ref9.isActive,
+      text = _ref9.text,
+      searchKey = _ref9.searchKey,
+      onMouseOver = _ref9.onMouseOver;
 
   var className = "autoinput-item" + (isActive ? " autoinput-item__active" : "");
   return _react2.default.createElement(
